@@ -22,7 +22,7 @@ async function handleNewPlayer(req, res) {
 
         channels[req.body.channel_id] = [];
 		channels[req.body.channel_id][req.body.user_id] = {
-        	user_id : req.body.channel_id,
+        	user_id : req.body.user_id,
         	user_name : req.body.user_name,
 			point : 0
 		};
@@ -41,8 +41,8 @@ async function handleNewPlayer(req, res) {
 function channelToString(channel_id) {
 	let string = "| " + "id".padEnd(10) + " | " + "name".padEnd(10) + " | " + "point".padEnd(10) + " | \n";
 
-    channels[channel_id].forEach(function (item, index, array) {
-        string += "| " + item[index]['user_id'].toString().padEnd(10) + " | " + item[index]['user_name'].padEnd(10) + " | " + item[index]['point'].toString().padEnd(10) + " | \n";
+    channels[channel_id].forEach(function (channel) {
+        string += "| " + channel.user_id.toString().padEnd(10) + " | " + channel.user_name.padEnd(10) + " | " + channel.point.toString().padEnd(10) + " | \n";
 	});
 
     console.log(channels);
@@ -50,6 +50,7 @@ function channelToString(channel_id) {
 
     return string;
 }
+
 /*
 handleNewPlayer({
     body : {
