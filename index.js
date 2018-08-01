@@ -45,7 +45,7 @@ function channelToString(channel_id) {
         string += "| " + channel.user_id.toString().padEnd(10) + " | " + channel.user_name.padEnd(10) + " | " + channel.point.toString().padEnd(10) + " | \n";
 	});
 
-    console.log(channels);
+    console.log(channels[channel_id]);
     console.log("chan to string : \n" + string);
 
     return string;
