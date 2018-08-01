@@ -7,13 +7,13 @@ httpApi.use(bodyParser.urlencoded({extended: true}));
 httpApi.post('/finger-new-player', handleNewPlayer);
 httpApi.listen(process.env.PORT);
 
-console.log('init server');
+console.log('init server ! ');
 
 let channels = [];
 
 async function handleNewPlayer(req, res) {
 
-	console.log('new player' + req.body.user_name);
+	console.log('new player : ' + req.body.user_name);
 
 	let result;
 	try {
@@ -42,6 +42,8 @@ function channelToString(channel_id) {
     channels[channel_id].forEach(function (channel) {
         string += "| " + channel['user_id'].toString().padEnd(10) + " | " + channel['user_name'].padEnd(10) + " | " + channel['point'].toString().padEnd(10) + " | \n";
 	});
+
+    console.log("chan to string : \n" + string);
 
     return string;
 }
