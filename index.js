@@ -25,6 +25,7 @@ async function handleNewPlayer(req, res) {
         	user_name : req.body.user_name,
 			point : 0
 		};
+        console.log(channels);
 
 		result = channelToString(req.body.channel_id);
 	} catch(e) {
@@ -38,6 +39,7 @@ async function handleNewPlayer(req, res) {
 }
 
 function channelToString(channel_id) {
+    console.log("------------------------");
 	let string = "| " + "id".padEnd(10) + " | " + "name".padEnd(10) + " | " + "point".padEnd(10) + " | \n";
 
     channels[channel_id].forEach(function (channel) {
