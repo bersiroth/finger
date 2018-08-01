@@ -20,8 +20,7 @@ async function handleNewPlayer(req, res) {
 		console.log(req.body.channel_id);
 		console.log(req.body.user_id);
 
-        channels[req.body.channel_id] = [];
-		channels[req.body.channel_id][req.body.user_id] = {
+		channels[req.body.channel_id] = {
         	user_id : req.body.channel_id,
         	user_name : req.body.user_name,
 			point : 0
