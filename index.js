@@ -20,12 +20,12 @@ async function handleNewPlayer(req, res) {
 		console.log(req.body.channel_id);
 		console.log(req.body.user_id);
 
-		channels[req.body.channel_id] = {
+        channels[req.body.channel_id] = [];
+		channels[req.body.channel_id][req.body.user_id] = {
         	user_id : req.body.channel_id,
         	user_name : req.body.user_name,
 			point : 0
 		};
-        console.log(channels);
 
 		result = channelToString(req.body.channel_id);
 	} catch(e) {
@@ -39,15 +39,12 @@ async function handleNewPlayer(req, res) {
 }
 
 function channelToString(channel_id) {
-    console.log("------------------------");
 	let string = "| " + "id".padEnd(10) + " | " + "name".padEnd(10) + " | " + "point".padEnd(10) + " | \n";
 
-    channels[channel_id].forEach(function (channel) {
-    	console.log(string);
-        string += "| " + channel['user_id'].toString().padEnd(10) + " | " + channel['user_name'].padEnd(10) + " | " + channel['point'].toString().padEnd(10) + " | \n";
-        console.log(string);
+    channels[channel_id].forEach(function (item, index, array) {
+        string += "| " + item[index]['user_id'].toString().padEnd(10) + " | " + item[index]['user_name'].padEnd(10) + " | " + item[index]['point'].toString().padEnd(10) + " | \n";
 	});
-    console.log("------------------------");
+
     console.log(channels);
     console.log("chan to string : \n" + string);
 
