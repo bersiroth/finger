@@ -5,7 +5,7 @@ let httpApi = express();
 httpApi.use(bodyParser.json());
 httpApi.use(bodyParser.urlencoded({extended: true}));
 httpApi.post('/finger-new-player', handleNewPlayer);
-httpApi.listen(24605);
+httpApi.listen(5000);
 
 console.log('init server');
 async function handleNewPlayer(req, res) {
