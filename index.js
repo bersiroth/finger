@@ -11,7 +11,7 @@ console.log('init server');
 async function handleNewPlayer(req, res) {
 
 	console.log('new player');
-	let result = '';
+	let result = 'bien recu !';
 	try {
 		// await createEval(req.body.channel_id, req.body.user_id, req.body.text);
 		console.log(req.body.channel_id);
