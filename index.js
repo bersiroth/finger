@@ -40,6 +40,7 @@ async function handleNewPlayer(req, res) {
 
 function channelToString(channel_id) {
 	let string = "| " + "id".padEnd(10) + " | " + "name".padEnd(10) + " | " + "point".padEnd(10) + " | \n";
+	 string += "| " + "id".padEnd(10) + " | " + "name".padEnd(10) + " | " + "point".padEnd(10) + " | \n";
 
     channels[channel_id].forEach(function (channel) {
         string += "| " + channel.user_id.toString().padEnd(10) + " | " + channel.user_name.padEnd(10) + " | " + channel.point.toString().padEnd(10) + " | \n";
