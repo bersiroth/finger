@@ -31,7 +31,9 @@ async function handleNewPlayer(req, res) {
 	} catch(e) {
 		result = e;
 	} finally {
-		res.status(200).send(result);
+		res.status(200).send({
+			text : result
+        });
 		//console.log(result);
 	}
 }
