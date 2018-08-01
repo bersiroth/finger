@@ -39,20 +39,12 @@ async function handleNewPlayer(req, res) {
 }
 
 function channelToString(channel_id) {
-	let string = "| " + "id".padEnd(10) + " | " + "name".padEnd(10) + " | " + "point".padEnd(10) + " | \n";
+	let string = "| " + "id".padEnd(20) + " | " + "name".padEnd(20) + " | " + "point".padEnd(20) + " | \n";
 
-    /*channels[channel_id].forEach(function (channel) {
-        string += "| " + channel.user_id.toString().padEnd(10) + " | " + channel.user_name.padEnd(10) + " | " + channel.point.toString().padEnd(10) + " | \n";
-	});*/
-    console.log(channels[channel_id]);
-    console.log('ici');
     for (let i = 0, len = channels[channel_id].length; i < len; i++) {
     	console.log(channels[channel_id][i]);
-        string += "| " + channels[channel_id][i].user_id.toString().padEnd(10) + " | " + channels[channel_id][i].user_name.padEnd(10) + " | " + channels[channel_id][i].point.toString().padEnd(10) + " | \n";
+        string += "| " + channels[channel_id][i].user_id.toString().toLowerCase().padEnd(20) + " | " + channels[channel_id][i].user_name.toLowerCase().padEnd(20) + " | " + channels[channel_id][i].point.toString().toLowerCase().padEnd(20) + " | \n";
     }
-
-    console.log(channels[channel_id]);
-    console.log("chan to string : \n" + string);
 
     return string;
 }
