@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const asciiTable = require('ascii-table')
 
 let httpApi = express();
 httpApi.use(bodyParser.json());
@@ -39,15 +40,23 @@ async function handleNewPlayer(req, res) {
 }
 
 function channelToString(channel_id) {
-	let string = "```| " + "id".padEnd(20) + " | " + "name".padEnd(20) + " | " + "point".padEnd(20) + " | \n";
+
+	let table = new asciiTable();
+	table.setHeading("id","name","point");
+
+	//let string = "```| " + "id".padEnd(20) + " | " + "name".padEnd(20) + " | " + "point".padEnd(20) + " | \n";
 
     for (let i = 0, len = channels[channel_id].length; i < len; i++) {
     	console.log(channels[channel_id][i]);
-        string += "| " + channels[channel_id][i].user_id.toString().toLowerCase().padEnd(20) + " | " + channels[channel_id][i].user_name.toLowerCase().padEnd(20) + " | " + channels[channel_id][i].point.toString().toLowerCase().padEnd(20) + " | \n";
+		table.addRow(channels[channel_id][i]);
+        //table.addRow(channels[channel_id][i].user_id, channels[channel_id][i].user_name, channels[channel_id][i].point);
+    	//string += "| " + channels[channel_id][i].user_id.toString().toLowerCase().padEnd(20) + " | " + channels[channel_id][i].user_name.toLowerCase().padEnd(20) + " | " + channels[channel_id][i].point.toString().toLowerCase().padEnd(20) + " | \n";
     }
 
-    string += "```";
-    return string;
+    return table.toString();
+
+    //string += "```";
+   // return string;
 }
 
 /*
