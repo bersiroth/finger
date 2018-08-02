@@ -38,6 +38,8 @@ async function handleNewPlayer(req, res) {
 					point : 0
 				});
 
+				channels[req.body.channel_id] = channel;
+
 				result = channelToString(req.body.channel_id);
 			} else {
 				console.log(' -- already --');
@@ -49,8 +51,6 @@ async function handleNewPlayer(req, res) {
 			console.log(channel);
 			result = "This game is full";
 		}
-
-		channels[req.body.channel_id] = channel;
 
 	} catch(e) {
 		result = e;
