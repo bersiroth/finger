@@ -1,16 +1,63 @@
-const express = require('express');
+const Express = require('express');
 const bodyParser = require('body-parser');
-const asciiTable = require('ascii-table');
+const AsciiTable = require('ascii-table');
+const pg = require('pg');
 
-let httpApi = express();
+const client = new pg.Client({
+	connectionString: process.env.DATABASE_URL || 'postgres://postgres:azerty@localhost:5432/postgres',
+});
+
+client.connect();
+
+client.query('CREATE TABLE IF NOT EXISTS items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
+
+client.query('SELECT NOW() as now', (err, res) => {
+	if (err) {
+		console.log(err.stack)
+	} else {
+		console.log(res.rows[0])
+	}
+});
+
+let httpApi = Express();
 httpApi.use(bodyParser.json());
 httpApi.use(bodyParser.urlencoded({extended: true}));
 httpApi.post('/finger-new-player', handleNewPlayer);
+httpApi.post('/finger-players', handlePlayers);
+httpApi.post('/finger-point', handlePoint);
 httpApi.listen(process.env.PORT);
 
 console.log(' -- init server --');
 
 let channels = [];
+
+async function handlePoint(req, res) {
+
+	console.log(' -- point --');
+
+	res.status(200).send({
+		text : "New point !"
+	});
+}
+
+async function handlePlayers(req, res) {
+
+	console.log(' -- players --');
+
+	let players;
+
+	try {
+		players = channelToString(req.body.channel_id);
+		console.log(players);
+	} catch(e) {
+		players = e;
+	} finally {
+		res.status(200).send({
+			text : players
+		});
+	}
+
+}
 
 async function handleNewPlayer(req, res) {
 
@@ -18,6 +65,7 @@ async function handleNewPlayer(req, res) {
 	console.log(req.body.user_name);
 
 	let result;
+
 	try {
 		console.log(' -- channel id --');
 		console.log(req.body.channel_id);
@@ -58,35 +106,18 @@ async function handleNewPlayer(req, res) {
 		res.status(200).send({
 			text : result
         });
-		//console.log(result);
 	}
 }
 
 function channelToString(channel_id) {
 
-	let table = new asciiTable();
+	let table = new AsciiTable();
 	table.setHeading("id","name","point");
-
-	//let string = "```| " + "id".padEnd(20) + " | " + "name".padEnd(20) + " | " + "point".padEnd(20) + " | \n";
 
     for (let i = 0, len = channels[channel_id].length; i < len; i++) {
     	console.log(channels[channel_id][i]);
-		//table.addRow(channels[channel_id][i]);
         table.addRow(channels[channel_id][i].user_id, channels[channel_id][i].user_name, channels[channel_id][i].point);
-    	//string += "| " + channels[channel_id][i].user_id.toString().toLowerCase().padEnd(20) + " | " + channels[channel_id][i].user_name.toLowerCase().padEnd(20) + " | " + channels[channel_id][i].point.toString().toLowerCase().padEnd(20) + " | \n";
     }
 
     return '```' + table.toString() + '```';
-
-    //string += "```";
-   // return string;
 }
-
-/*
-handleNewPlayer({
-    body : {
-        channel_id : 1,
-        user_id : '12',
-        user_name : 'bernard',
-	}
-}, null); */
