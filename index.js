@@ -21,6 +21,10 @@ async function handleNewPlayer(req, res) {
 		console.log(req.body.channel_id);
 		console.log(req.body.user_id);
 
+		if(channels[req.body.channel_id] === undefined) {
+			channels[req.body.channel_id] = [];
+		}
+
         //channels[req.body.channel_id] = [];
 		channels[req.body.channel_id].push({
         	user_id : req.body.user_id,
