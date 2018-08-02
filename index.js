@@ -53,7 +53,7 @@ function channelToString(channel_id) {
     	//string += "| " + channels[channel_id][i].user_id.toString().toLowerCase().padEnd(20) + " | " + channels[channel_id][i].user_name.toLowerCase().padEnd(20) + " | " + channels[channel_id][i].point.toString().toLowerCase().padEnd(20) + " | \n";
     }
 
-    return table.toString();
+    return '```' + table.toString() + '```';
 
     //string += "```";
    // return string;
