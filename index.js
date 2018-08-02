@@ -48,8 +48,8 @@ function channelToString(channel_id) {
 
     for (let i = 0, len = channels[channel_id].length; i < len; i++) {
     	console.log(channels[channel_id][i]);
-		table.addRow(channels[channel_id][i]);
-        //table.addRow(channels[channel_id][i].user_id, channels[channel_id][i].user_name, channels[channel_id][i].point);
+		//table.addRow(channels[channel_id][i]);
+        table.addRow(channels[channel_id][i].user_id, channels[channel_id][i].user_name, channels[channel_id][i].point);
     	//string += "| " + channels[channel_id][i].user_id.toString().toLowerCase().padEnd(20) + " | " + channels[channel_id][i].user_name.toLowerCase().padEnd(20) + " | " + channels[channel_id][i].point.toString().toLowerCase().padEnd(20) + " | \n";
     }
 
