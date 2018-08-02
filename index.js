@@ -39,13 +39,14 @@ async function handleNewPlayer(req, res) {
 }
 
 function channelToString(channel_id) {
-	let string = "| " + "id".padEnd(20) + " | " + "name".padEnd(20) + " | " + "point".padEnd(20) + " | \n";
+	let string = "```| " + "id".padEnd(20) + " | " + "name".padEnd(20) + " | " + "point".padEnd(20) + " | \n";
 
     for (let i = 0, len = channels[channel_id].length; i < len; i++) {
     	console.log(channels[channel_id][i]);
         string += "| " + channels[channel_id][i].user_id.toString().toLowerCase().padEnd(20) + " | " + channels[channel_id][i].user_name.toLowerCase().padEnd(20) + " | " + channels[channel_id][i].point.toString().toLowerCase().padEnd(20) + " | \n";
     }
 
+    string += "```";
     return string;
 }
 
