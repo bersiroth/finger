@@ -30,7 +30,7 @@ async function handleNewPlayer(req, res) {
 			channel = [];
 		}
 
-		if (channel.length === 2) {
+		if (channel.length < 2) {
 			if (channel.length === 1 && channel[0].user_id !== req.body.user_id) {
 				channel.push({
 					user_id : req.body.user_id,
