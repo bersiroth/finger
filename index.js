@@ -50,6 +50,8 @@ async function handleNewPlayer(req, res) {
 			result = "This game is full";
 		}
 
+		channels[req.body.channel_id] = channel;
+
 	} catch(e) {
 		result = e;
 	} finally {
