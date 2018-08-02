@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const asciiTable = require('ascii-table')
+const asciiTable = require('ascii-table');
 
 let httpApi = express();
 httpApi.use(bodyParser.json());
@@ -8,17 +8,20 @@ httpApi.use(bodyParser.urlencoded({extended: true}));
 httpApi.post('/finger-new-player', handleNewPlayer);
 httpApi.listen(process.env.PORT);
 
-console.log('init server ! ');
+console.log(' -- init server --');
 
 let channels = [];
 
 async function handleNewPlayer(req, res) {
 
-	console.log('new player : ' + req.body.user_name);
+	console.log(' -- new player --');
+	console.log(req.body.user_name);
 
 	let result;
 	try {
+		console.log(' -- channel id --');
 		console.log(req.body.channel_id);
+		console.log(' -- user id --');
 		console.log(req.body.user_id);
 
 		let channel = channels[req.body.channel_id];
@@ -27,7 +30,6 @@ async function handleNewPlayer(req, res) {
 			channel = [];
 		}
 
-        //channels[req.body.channel_id] = [];
 		if (channel.length === 2) {
 			if (channel.length === 1 && channel[0].user_id !== req.body.user_id) {
 				channel.push({
@@ -38,9 +40,13 @@ async function handleNewPlayer(req, res) {
 
 				result = channelToString(req.body.channel_id);
 			} else {
+				console.log(' -- already --');
+				console.log(channel);
 				result = "You are already in this game";
 			}
 		} else {
+			console.log(' -- full --');
+			console.log(channel);
 			result = "This game is full";
 		}
 
