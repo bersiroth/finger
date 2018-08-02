@@ -21,18 +21,29 @@ async function handleNewPlayer(req, res) {
 		console.log(req.body.channel_id);
 		console.log(req.body.user_id);
 
-		if(channels[req.body.channel_id] === undefined) {
-			channels[req.body.channel_id] = [];
+		let channel = channels[req.body.channel_id];
+
+		if(channel === undefined) {
+			channel = [];
 		}
 
         //channels[req.body.channel_id] = [];
-		channels[req.body.channel_id].push({
-        	user_id : req.body.user_id,
-        	user_name : req.body.user_name,
-			point : 0
-		});
+		if (channel.length < 2) {
+			if (channel.length > 0 && channel[0].user_id !== req.body.user_id) {
+				channel.push({
+					user_id : req.body.user_id,
+					user_name : req.body.user_name,
+					point : 0
+				});
 
-		result = channelToString(req.body.channel_id);
+				result = channelToString(req.body.channel_id);
+			} else {
+				result = "You are already in this game";
+			}
+		} else {
+			result = "This game is full";
+		}
+
 	} catch(e) {
 		result = e;
 	} finally {
