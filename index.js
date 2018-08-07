@@ -41,7 +41,7 @@ async function handleNewGame(req, res) {
 
 	const channel_id = req.body.channel_id;
 	const user_id = req.body.user_id;
-	const user_name = req.body.name;
+	const user_name = req.body.user_name;
 
 	await createPlayer(user_id, user_name);
 	await createGame(channel_id, user_id);
@@ -99,11 +99,24 @@ async function createPlayer(user_id, user_name) {
 async function getGame(channel_id, user_id = null) {
 	let query, params;
 
+	query =
+		'SELECT ' +
+			'games.player_id, ' +
+			'players.name, ' +
+			'games.player_point, ' +
+			'games.date ' +
+		'FROM ' +
+			'games, ' +
+			'players ' +
+		'WHERE ' +
+			'games.player_id = players.user_id ' +
+			'AND games.channel_id = $1 ' +
+			'AND games.date = CURRENT_DATE';
+
 	if (user_id !== null) {
-		query = 'SELECT * FROM games WHERE channel_id = $1 AND player_id = $2 AND date = CURRENT_DATE';
+		query += ' AND games.player_id = $2';
 		params = [channel_id, user_id];
 	} else {
-		query = 'SELECT * FROM games WHERE channel_id = $1 AND date = CURRENT_DATE';
 		params = [channel_id];
 	}
 
@@ -130,10 +143,10 @@ async function createGame(channel_id, user_id) {
 function gameToString(game) {
 
 	let table = new AsciiTable();
-	table.setHeading("id","player id","player point","date");
+	table.setHeading("id","player id","player name","player point","date");
 
     for (let i = 0, len = game.length; i < len; i++) {
-        table.addRow(game[i].id, game[i].player_id, game[i].player_point, game[i].date);
+        table.addRow(game[i].id, game[i].player_id, game[i].name, game[i].player_point, game[i].date);
     }
 
     return '```' + table.toString() + '```';
