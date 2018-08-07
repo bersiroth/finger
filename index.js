@@ -47,7 +47,7 @@ async function handleNewGame(req, res) {
 	await createGame(channel_id, user_id);
 
 	res.status(200).send({
-		text : gameToString(await getGame(channel_id, user_id))
+		text : gameToString(await getGame(channel_id))
 	});
 }
 
@@ -96,8 +96,18 @@ async function createPlayer(user_id, user_name) {
 	return result;
 }
 
-async function getGame(channel_id, user_id) {
-	const res = await client.query('SELECT * FROM games WHERE channel_id = $1 AND player_id = $2 AND date = CURRENT_DATE', [channel_id, user_id]);
+async function getGame(channel_id, user_id = null) {
+	let query, params;
+
+	if (user_id !== null) {
+		query = 'SELECT * FROM games WHERE channel_id = $1 AND player_id = $2 AND date = CURRENT_DATE';
+		params = [channel_id, user_id];
+	} else {
+		query = 'SELECT * FROM games WHERE channel_id = $1 AND date = CURRENT_DATE';
+		params = [channel_id];
+	}
+
+	const res = await client.query(query, params);
 	return res.rows;
 }
 
